@@ -1,11 +1,10 @@
+'use strict';
+
+const CategoriesService = require('./categories.service');
+
 async function list(req, res, next) {
-  res.json({
-    data: [
-      { category_name: "category 1" },
-      { category_name: "category 2" },
-      { category_name: "category 3" },
-    ],
-  });
+  const categories = await CategoriesService.getAllCategories();
+  res.json({ data: categories });
 }
 
 module.exports = {

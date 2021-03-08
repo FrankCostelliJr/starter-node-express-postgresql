@@ -1,14 +1,31 @@
+/* eslint-disable no-unused-vars */
+'use strict';
+
+const ProductsService = require('./products.service');
+
+async function productExists(req, res, next) {
+  const error = { status: 404, message: `Product cannot be found.` };
+
+  const { productId } = req.params;
+  if (!productId) return next(error);
+
+  const product = await ProductsService.getProductById(productId);
+
+  if (!product) return next(error);
+  res.locals.product = product;
+  next();
+}
+
 function read(req, res, next) {
-  res.json({ data: { product_title: "some product title" } });
+  const { product } = res.locals;
+  res.json({ data: product });
 }
 
 function list(req, res, next) {
-  res.json({
-    data: [{ product_title: "product 1" }, { product_title: "product 2" }],
-  });
+  ProductsService.getAllProducts().then(products => res.json({ data: products }));
 }
 
 module.exports = {
-  read: [read],
+  read: [productExists, read],
   list: [list],
 };
