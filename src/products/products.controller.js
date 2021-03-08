@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-'use strict';
-
 const ProductsService = require('./products.service');
 
 async function productExists(req, res, next) {
@@ -16,7 +13,7 @@ async function productExists(req, res, next) {
   next();
 }
 
-function read(req, res, next) {
+function read(_req, res, _next) {
   const { product } = res.locals;
   res.json({ data: product });
 }

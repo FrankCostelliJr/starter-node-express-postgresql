@@ -39,7 +39,7 @@ const hasSupplierName = bodyDataHas("supplier_name");
 const hasSupplierEmail = bodyDataHas("supplier_email");
 
 
-function create(req, res, next) {
+async function create(req, res, next) {
   const newSupplier = ({
     supplier_name,
     supplier_address_line_1,
@@ -53,9 +53,8 @@ function create(req, res, next) {
     supplier_type_of_goods,
   } = req.body.data);
 
-  SuppliersService.createSupplier(newSupplier).then(createdSupplier =>
-    res.status(201).json({ data: createdSupplier })
-  );
+  const createdSupplier = await SuppliersService.createSupplier(newSupplier);
+  res.status(201).json({ data: createdSupplier });
 }
 
 function supplierExists(req, res, next) {
