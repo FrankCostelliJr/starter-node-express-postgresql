@@ -24,6 +24,8 @@ const getPriceSummary = () =>
     .groupBy('supplier_id');
 
 
+
+
 module.exports = { 
   getAllProducts,
   getProductById,
